@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour , IAnim
 {
     public enum CharacterAction
     {
@@ -57,11 +58,21 @@ public class PlayerController : MonoBehaviour
     
     private float horVelocity;
     
+    private readonly AnimData[] _animData = new AnimData[100 * 20];
+    private int _animDataPos;
+
     void Awake()
     {
+        for (var i = 0; i < _animData.Length; i++)
+        {
+            _animData[i] = new AnimData();
+        }
+        
         //GetBlocksCollisionPos(out ignoredBlocksCollisionMinPos, out ignoredBlocksCollisionMaxPos);
 
         //IgnoreBlocksCollision(ignoredBlocksCollisionMinPos, ignoredBlocksCollisionMaxPos);
+        
+        Step();
     }
 
     /*private void IgnoreBlocksCollision(BlockPos min, BlockPos max)
@@ -96,8 +107,13 @@ public class PlayerController : MonoBehaviour
             actorRigidBody.AddForce(Vector3.up * 6, ForceMode.Impulse);
         }
     }
-    
+
     void Update()
+    {
+        Step();
+    }
+    
+    private void Step()
     {
         /*GetBlocksCollisionPos(out var min, out var max);
 
@@ -123,6 +139,11 @@ public class PlayerController : MonoBehaviour
             IgnoreBlocksCollision(ignoredBlocksCollisionMinPos, ignoredBlocksCollisionMaxPos);
         }*/
 
+        _animDataPos++;
+        _animDataPos %= _animData.Length;
+        
+        _animData[_animDataPos].Clear();
+        
 
         UpdateInput();
         
@@ -131,16 +152,17 @@ public class PlayerController : MonoBehaviour
 
         if(newIsGround && !isGround)
         {
-            animator.SetTrigger("Land");
+            SetAnimTrigger("Land");
+            
         }
         else if (!newIsGround && isGround)
         {
-            animator.SetTrigger("Jump");
+            SetAnimTrigger("Jump");
         }
 
         isGround = newIsGround;
 
-        animator.SetBool("IsGround", isGround);
+        SetAnimBool("IsGround", isGround);
 
         var target = Quaternion.Euler(0, lookDirection > 0 ? 90 : 270, 0);
         visualTransform.rotation = Quaternion.Slerp(visualTransform.rotation, target, Time.deltaTime * 20f);
@@ -150,6 +172,9 @@ public class PlayerController : MonoBehaviour
         UpdateCurrentAction();
         
         visualTransform.position = actorRigidBody.position;
+
+        _animData[_animDataPos].pos = transform.position;
+        _animData[_animDataPos].rot = transform.rotation;
     }
 
     private void UpdateVelocity()
@@ -200,7 +225,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        animator.SetFloat("Velocity", Mathf.Abs(horVelocity) / MaxMoveSpeed);
+        SetAnimFloat("Velocity", Mathf.Abs(horVelocity) / MaxMoveSpeed);
 
         lastMoveDirection = 0;
     }
@@ -217,7 +242,7 @@ public class PlayerController : MonoBehaviour
             }
         }*/
 
-        animator.SetInteger("Action", (int) currentAction);
+        SetAnimInt("Action", (int) currentAction);
 
         if (prevAction != currentAction)
         {
@@ -265,12 +290,10 @@ public class PlayerController : MonoBehaviour
 
         //actionStartTime = actorManager.matchManager.MatchTime;
     }
-
-    private int lastDir;
-
+    
     private void UpdateInput()
     {
-        int dir = 0;
+        int dir;
         
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
@@ -292,4 +315,34 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
     }
+
+    private void SetAnimTrigger(string triggerName)
+    {
+        animator.SetTrigger(triggerName);
+        
+        _animData[_animDataPos].animTriggers.Add(triggerName);
+    }
+
+    private void SetAnimBool(string boolName, bool value)
+    {
+        animator.SetBool(boolName, value);
+
+        _animData[_animDataPos].animBools.Add(new Tuple<string, bool>(boolName, value));
+    }
+    
+    private void SetAnimFloat(string floatName, float value)
+    {
+        animator.SetFloat(floatName, value);
+
+        _animData[_animDataPos].animFloats.Add(new Tuple<string, float>(floatName, value));
+    }
+    
+    private void SetAnimInt(string intName, int value)
+    {
+        animator.SetInteger(intName, value);
+
+        _animData[_animDataPos].animInts.Add(new Tuple<string, int>(intName, value));
+    }
+
+    public AnimData GetAnimData() => _animData[_animDataPos];
 }
