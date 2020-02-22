@@ -5,13 +5,15 @@ using UnityEngine;
 public interface IAnim
 {
     AnimData GetAnimData();
+
+    int GetCharId();
 }
 
 public class AnimData
 {
     public Vector3 pos;
-    public Quaternion rot;
-        
+    public int look;
+    
     public List<Tuple<string, bool>> animBools;
     public List<string> animTriggers;
     public List<Tuple<string, float>> animFloats;

@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour , IAnim
 
     private readonly List<Collider> ignoredBlocksCollision = new List<Collider>(6);
 
-    public Animator animator;
+    public Animator[] animators;
 
     public Vector2 Velocity
     {
@@ -44,11 +44,16 @@ public class PlayerController : MonoBehaviour , IAnim
     private CharacterAction prevAction = CharacterAction.No;
     public float actionStartTime;
 
+
+    public CharacterSelector characterSelector;
+    public int orderOffset;
+    
+    
     private float actionCooldownStartTime;
 
-    //public for multiplayer actor manager
-    public int lookDirection;
-    public int lastMoveDirection;
+
+    private int lookDirection;
+    private int lastMoveDirection;
 
     private bool requireJump;
 
@@ -60,6 +65,8 @@ public class PlayerController : MonoBehaviour , IAnim
     
     private readonly AnimData[] _animData = new AnimData[100 * 20];
     private int _animDataPos;
+
+    private int charId = 0;
 
     void Awake()
     {
@@ -73,6 +80,10 @@ public class PlayerController : MonoBehaviour , IAnim
         //IgnoreBlocksCollision(ignoredBlocksCollisionMinPos, ignoredBlocksCollisionMaxPos);
         
         Step();
+        
+        characterSelector.UpdateRenderers(charId);
+        
+        characterSelector.UpdateOrderOffset(orderOffset);
     }
 
     /*private void IgnoreBlocksCollision(BlockPos min, BlockPos max)
@@ -164,8 +175,10 @@ public class PlayerController : MonoBehaviour , IAnim
 
         SetAnimBool("IsGround", isGround);
 
-        var target = Quaternion.Euler(0, lookDirection > 0 ? 90 : 270, 0);
-        visualTransform.rotation = Quaternion.Slerp(visualTransform.rotation, target, Time.deltaTime * 20f);
+        //var target = Quaternion.Euler(0, lookDirection > 0 ? 90 : 270, 0);
+        //visualTransform.rotation = Quaternion.Slerp(visualTransform.rotation, target, Time.deltaTime * 20f);
+        
+        if(lookDirection != 0) visualTransform.transform.localScale = new Vector3(lookDirection > 0 ? 1 : -1, 1, 1);
 
         UpdateVelocity();
 
@@ -174,7 +187,7 @@ public class PlayerController : MonoBehaviour , IAnim
         visualTransform.position = actorRigidBody.position;
 
         _animData[_animDataPos].pos = transform.position;
-        _animData[_animDataPos].rot = transform.rotation;
+        _animData[_animDataPos].look = lookDirection;
     }
 
     private void UpdateVelocity()
@@ -314,35 +327,61 @@ public class PlayerController : MonoBehaviour , IAnim
         {
             Jump();
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            charId++;
+
+            charId %= 3;
+            
+            characterSelector.UpdateRenderers(charId);
+        }
     }
 
     private void SetAnimTrigger(string triggerName)
     {
-        animator.SetTrigger(triggerName);
+        foreach (var animator in animators)
+        {
+            animator.SetTrigger(triggerName);
+        }
         
         _animData[_animDataPos].animTriggers.Add(triggerName);
     }
 
     private void SetAnimBool(string boolName, bool value)
     {
-        animator.SetBool(boolName, value);
-
+        foreach (var animator in animators)
+        {
+             animator.SetBool(boolName, value);
+        }
+        
         _animData[_animDataPos].animBools.Add(new Tuple<string, bool>(boolName, value));
     }
     
     private void SetAnimFloat(string floatName, float value)
     {
-        animator.SetFloat(floatName, value);
-
+        foreach (var animator in animators)
+        {
+            animator.SetFloat(floatName, value);
+        }
+        
         _animData[_animDataPos].animFloats.Add(new Tuple<string, float>(floatName, value));
     }
     
     private void SetAnimInt(string intName, int value)
     {
-        animator.SetInteger(intName, value);
+        foreach (var animator in animators)
+        {
+            animator.SetInteger(intName, value);
+        }
 
         _animData[_animDataPos].animInts.Add(new Tuple<string, int>(intName, value));
     }
 
     public AnimData GetAnimData() => _animData[_animDataPos];
+    
+    public int GetCharId()
+    {
+        return charId;
+    }
 }

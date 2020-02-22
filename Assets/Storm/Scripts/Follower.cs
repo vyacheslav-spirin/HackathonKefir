@@ -4,7 +4,12 @@ public class Follower : MonoBehaviour, IAnim
 {
     public GameObject parentGo;
 
-    public Animator animator;
+    public Animator[] animators;
+
+    public CharacterSelector characterSelector;
+    
+    public int skinOffset;
+    public int orderOffset;
     
     private const int offsetFrames = 12;
 
@@ -23,6 +28,8 @@ public class Follower : MonoBehaviour, IAnim
         if (parent != null) return;
         
         Init();
+        
+        characterSelector.UpdateOrderOffset(orderOffset);
     }
     
     private void Init()
@@ -48,26 +55,43 @@ public class Follower : MonoBehaviour, IAnim
         var frame = frames[readPos % frames.Length];
         
         transform.position = frame.pos + new Vector3(0, 0, 0.17f);
-        transform.rotation = frame.rot;
+        if(frame.look != 0) transform.localScale = new Vector3(frame.look > 0 ? 1 : -1, 1, 1);
+
+        var charId = parent.GetCharId() + skinOffset;
+        charId %= 3;
+
+        characterSelector.UpdateRenderers(charId);
         
         foreach (var animBool in frame.animBools)
         {
-            animator.SetBool(animBool.Item1, animBool.Item2);
+            foreach (var animator in animators)
+            {
+                animator.SetBool(animBool.Item1, animBool.Item2);
+            }
         }
         
         foreach (var animTrigger in frame.animTriggers)
         {
-            animator.SetTrigger(animTrigger);
+            foreach (var animator in animators)
+            {
+                animator.SetTrigger(animTrigger);
+            }
         }
         
         foreach (var animFloat in frame.animFloats)
         {
-            animator.SetFloat(animFloat.Item1, animFloat.Item2);
+            foreach (var animator in animators)
+            {
+                animator.SetFloat(animFloat.Item1, animFloat.Item2);
+            }
         }
         
         foreach (var animInt in frame.animInts)
         {
-            animator.SetInteger(animInt.Item1, animInt.Item2);
+            foreach (var animator in animators)
+            {
+                animator.SetInteger(animInt.Item1, animInt.Item2);
+            }
         }
     }
 
@@ -95,5 +119,10 @@ public class Follower : MonoBehaviour, IAnim
         Fetch();
         
         return frames[readPos % frames.Length];
+    }
+
+    public int GetCharId()
+    {
+        return parent.GetCharId() + skinOffset;
     }
 }
