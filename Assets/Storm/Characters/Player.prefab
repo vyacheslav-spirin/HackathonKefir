@@ -1819,9 +1819,9 @@ MonoBehaviour:
   visualTransform: {fileID: 6946764426609924439}
   rigidBodyTransform: {fileID: 6946764426609924439}
   animators:
-  - {fileID: 7399495118957626059}
   - {fileID: 5387984006710956490}
   - {fileID: 2059079082028070832}
+  - {fileID: 7399495118957626059}
   currentAction: 0
   actionStartTime: 0
   characterSelector: {fileID: 3150346432264806158}
@@ -1852,8 +1852,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roots:
   - {fileID: 5447096502303119220}
-  - {fileID: 7485622614267168049}
   - {fileID: 2144098269489871426}
+  - {fileID: 7485622614267168049}
 --- !u!1 &3375365611951687415
 GameObject:
   m_ObjectHideFlags: 0
