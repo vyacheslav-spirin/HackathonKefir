@@ -21,7 +21,7 @@ namespace Intro
         private void OnEnable()
         {
             SceneManager.LoadScene(SceneName);
-            Debug.Log("SWITCH SCENE");
+            Debug.Log($"SWITCH SCENE: {SceneName}");
         }
     }
 }
