@@ -73,7 +73,7 @@ namespace Intro
         private IEnumerator CameraShake()
         {
             Debug.Log("Start camera shake");
-            yield return new WaitForSeconds(_shakeDuration);
+            // yield return new WaitForSeconds(_shakeDuration);
             
             float endTs = Time.time + _shakeDuration;
             float startTs = Time.time;
@@ -104,7 +104,7 @@ namespace Intro
         {
             yield return new WaitForSeconds(_shakeDelay);
             
-            float endTs = Time.time + 0.5f;
+            float endTs = Time.time + 0.3f;
             float startTs = Time.time;
             float nowTs = Time.time;
             
