@@ -4,7 +4,7 @@
 	{
 		_NoiseTex("Noise Texture", 2D) = "white" {}
 		_GradientTex("Gradient Texture", 2D) = "white" {}
- 
+		
 		_BrighterCol("Brighter Color", Color) = (1,1,1,1)
 		_MiddleCol("Middle Color", Color) = (.7,.7,.7,1)
 		_DarkerCol("Darker Color", Color) = (.4,.4,.4,1)
@@ -32,10 +32,13 @@
  
 			sampler2D _NoiseTex;
 			sampler2D _GradientTex;
- 
+			
 			float4 _BrighterCol;
 			float4 _MiddleCol;
 			float4 _DarkerCol;
+			
+			
+			float4 _NoiseTex_ST;
  
 			//Input for the vertex
 			struct appdata {
@@ -59,7 +62,9 @@
  
 			float4 frag(v2f IN) : SV_Target {
 				
-				float noiseValue = tex2D(_NoiseTex, IN.uv - float2(0, _Time.x)).x; //fire with scrolling
+				float noiseValue = tex2D(_NoiseTex, (IN.uv * _NoiseTex_ST.xy) - float2(0, _Time.x)).x; //fire with scrolling
+				
+
 				float gradientValue = tex2D(_GradientTex, IN.uv).x;
 				
 				float step1 = step(noiseValue, gradientValue);
@@ -86,7 +91,8 @@
 						_MiddleCol.rgb,
 						step2 - step3 //Corresponds to "L2" in my GIF
 					);
- 
+					
+
 				return c;
 			}
 			ENDCG
