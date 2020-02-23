@@ -504,8 +504,7 @@ public class PlayerController : MonoBehaviour , IAnim
     {
         return charId;
     }
-
-
+    
     public static void Kill()
     {
         if (_player.isKilled) return;
@@ -535,5 +534,13 @@ public class PlayerController : MonoBehaviour , IAnim
     public void SetLastTpTime(float tpTime)
     {
         lastTpTime = tpTime;
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.GetComponent<DeathCollision>() != null)
+        {
+            Kill();
+        }
     }
 }
