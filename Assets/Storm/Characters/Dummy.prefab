@@ -1861,8 +1861,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roots:
   - {fileID: 6724427712624335007}
-  - {fileID: 8152720473160829658}
   - {fileID: 794691871752451497}
+  - {fileID: 8152720473160829658}
 --- !u!114 &4431059810164199679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1878,8 +1878,8 @@ MonoBehaviour:
   parentGo: {fileID: 0}
   animators:
   - {fileID: 6630416719032016417}
-  - {fileID: 8103743277921733920}
   - {fileID: 744606368927889499}
+  - {fileID: 8103743277921733920}
   characterSelector: {fileID: 5711799308541019117}
   skinOffset: 1
   orderOffset: 20

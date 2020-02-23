@@ -70,8 +70,8 @@ public class PlayerController : MonoBehaviour , IAnim
     public static readonly float[] CooldownsTotal =
     {
         4.5f, //Inviser
-        5f, //Swapper
-        4f  //Hatman
+        4f,   //Hatman
+        5f    //Swapper
     };
 
     public const float InviseTime = 2f;
@@ -419,7 +419,7 @@ public class PlayerController : MonoBehaviour , IAnim
             return;
         }
 
-        if (charId == 1) //Swapman
+        if (charId == 2) //Swapman
         {
             var srcPos = transform.position + new Vector3(0, 0.43f, 0);
             
