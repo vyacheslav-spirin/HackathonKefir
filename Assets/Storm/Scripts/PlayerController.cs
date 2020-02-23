@@ -415,6 +415,30 @@ public class PlayerController : MonoBehaviour , IAnim
         if (charId == 0) //Inviser
         {
             InvisibleTime = InviseTime;
+
+            return;
+        }
+
+        if (charId == 1) //Swapman
+        {
+            var srcPos = transform.position + new Vector3(0, 0.43f, 0);
+            
+            var playerScreenPos3d = LevelCam.Cam.WorldToScreenPoint(srcPos);
+            var cursorScreenPos3d = Input.mousePosition;
+            
+            var playerScreenPos = new Vector2(playerScreenPos3d.x, playerScreenPos3d.y);
+            var cursorScreenPos = new Vector2(cursorScreenPos3d.x, cursorScreenPos3d.y);
+            
+            
+            
+            var dir = cursorScreenPos - playerScreenPos;
+            dir.Normalize();
+            if(dir == Vector2.zero) dir = new Vector2(1, 0);
+            
+            var swapBallPrefab = Resources.Load<SwapBall>("Skills/SwapBall");
+            
+            var swapBall = Instantiate(swapBallPrefab, srcPos, Quaternion.identity);
+            swapBall.SetDir(dir);
         }
     }
     
