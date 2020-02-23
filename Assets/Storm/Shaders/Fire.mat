@@ -81,8 +81,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BrighterCol: {r: 0.9056604, g: 0.1407564, b: 0.08116765, a: 1}
+    - _BrighterCol: {r: 0.78431374, g: 0.1407564, b: 0.08116765, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DarkerCol: {r: 0.67058825, g: 0.6436679, b: 0, a: 1}
+    - _DarkerCol: {r: 0.8490566, g: 0.8164312, b: 0.052064814, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MiddleCol: {r: 0.6792453, g: 0.40581566, b: 0.06728373, a: 1}
+    - _MiddleCol: {r: 0.8679245, g: 0.6162548, b: 0.1432894, a: 1}
