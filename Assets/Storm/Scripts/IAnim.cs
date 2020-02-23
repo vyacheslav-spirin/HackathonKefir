@@ -13,6 +13,8 @@ public class AnimData
 {
     public Vector3 pos;
     public int look;
+
+    public bool isInvisible;
     
     public List<Tuple<string, bool>> animBools;
     public List<string> animTriggers;

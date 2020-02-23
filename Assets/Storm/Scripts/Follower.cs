@@ -62,6 +62,8 @@ public class Follower : MonoBehaviour, IAnim
 
         characterSelector.UpdateRenderers(charId);
         
+        characterSelector.SetInvisible(frame.isInvisible);
+        
         foreach (var animBool in frame.animBools)
         {
             foreach (var animator in animators)

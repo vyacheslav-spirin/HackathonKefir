@@ -31,12 +31,6 @@ public class PlayerController : MonoBehaviour , IAnim
 
     public Animator[] animators;
 
-    public Vector2 Velocity
-    {
-        get => actorRigidBody.velocity;
-        set => actorRigidBody.velocity = value;
-    }
-
     //private BlockPos ignoredBlocksCollisionMinPos;
     //private BlockPos ignoredBlocksCollisionMaxPos;
 
@@ -67,6 +61,40 @@ public class PlayerController : MonoBehaviour , IAnim
     private int _animDataPos;
 
     private int charId = 0;
+    
+    
+    
+    
+    //skills
+
+    public static readonly float[] CooldownsTotal =
+    {
+        4.5f, //Inviser
+        5f, //Swapper
+        4f  //Hatman
+    };
+
+    public const float InviseTime = 2f;
+    
+    private readonly float[] _cooldowns = new float[3];
+
+    public float CooldownTotal => CooldownsTotal[charId];
+    public float CooldownLeft => _cooldowns[charId];
+
+
+    public float InvisibleTime { get; private set; }
+
+
+    public bool IsInvisible => InvisibleTime > 0;
+    
+    
+    
+    //
+    
+    
+    
+    
+    
 
     void Awake()
     {
@@ -80,7 +108,14 @@ public class PlayerController : MonoBehaviour , IAnim
         //IgnoreBlocksCollision(ignoredBlocksCollisionMinPos, ignoredBlocksCollisionMaxPos);
         
         Step();
+
+        charId = 0;
         
+        UpdateChar();
+    }
+
+    private void UpdateChar()
+    {
         characterSelector.UpdateRenderers(charId);
         
         characterSelector.UpdateOrderOffset(orderOffset);
@@ -184,10 +219,24 @@ public class PlayerController : MonoBehaviour , IAnim
 
         UpdateCurrentAction();
         
+        UpdateCooldown();
+
+        InvisibleTime -= Time.deltaTime;
+        if (InvisibleTime < 0) InvisibleTime = 0;
+        
+        
+        
         visualTransform.position = actorRigidBody.position;
+
+
+        var isInvisibleEnabled = InvisibleTime > 0;
+        
 
         _animData[_animDataPos].pos = transform.position;
         _animData[_animDataPos].look = lookDirection;
+        _animData[_animDataPos].isInvisible = isInvisibleEnabled;
+        
+        characterSelector.SetInvisible(isInvisibleEnabled);
     }
 
     private void UpdateVelocity()
@@ -328,15 +377,48 @@ public class PlayerController : MonoBehaviour , IAnim
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(1))
         {
             charId++;
 
             charId %= 3;
             
-            characterSelector.UpdateRenderers(charId);
+            UpdateChar();
+        }
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            UseSkill();
         }
     }
+
+    private void UpdateCooldown()
+    {
+        for (var i = 0; i < _cooldowns.Length; i++)
+        {
+            ref var cd = ref _cooldowns[i];
+
+            cd -= Time.deltaTime;
+            if (cd < 0) cd = 0;
+        }
+    }
+
+
+    private void UseSkill()
+    {
+        ref var cd = ref _cooldowns[charId];
+
+        if (cd > 0) return;
+
+        cd = CooldownsTotal[charId];
+
+        if (charId == 0) //Inviser
+        {
+            InvisibleTime = InviseTime;
+        }
+    }
+    
+    
 
     private void SetAnimTrigger(string triggerName)
     {
