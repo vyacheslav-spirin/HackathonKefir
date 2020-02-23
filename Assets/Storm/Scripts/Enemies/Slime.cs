@@ -73,7 +73,8 @@ public class Slime : MonoBehaviour, ISwapReceiver
                     {
                         if (h > 0)
                         {
-                            if (TerrainHit.Get(transform.position, new Vector3(0, 1, 0), out targetMovePoint, out _))
+                            if (TerrainHit.Get(transform.position + new Vector3(0, -0.05f, 0), new Vector3(0, 1, 0), out targetMovePoint, out _) &&
+                                Vector3.Distance(transform.position, targetMovePoint) > 0.01f)
                             {
                                 isMove = 1;
                                 PrepareMove();
@@ -81,13 +82,16 @@ public class Slime : MonoBehaviour, ISwapReceiver
                         }
                         else
                         {
-                            if (!TerrainHit.Get(transform.position, new Vector3(0, -1, 0), out targetMovePoint, out _))
+                            if (!TerrainHit.Get(transform.position + new Vector3(0, 0.05f, 0), new Vector3(0, -1, 0), out targetMovePoint, out _))
                             {
                                 targetMovePoint = transform.position + new Vector3(0, -300, 0);
                             }
-                            
-                            isMove = -1;
-                            PrepareMove();
+
+                            if (Vector3.Distance(transform.position, targetMovePoint) > 0.01f)
+                            {
+                                isMove = -1;
+                                PrepareMove();
+                            }
                         }
 
                         break;

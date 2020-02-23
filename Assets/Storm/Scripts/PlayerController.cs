@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour , IAnim
     public static readonly float[] CooldownsTotal =
     {
         4.5f, //Inviser
-        4f,   //Hatman
+        5f,   //Hatman
         5f    //Swapper
     };
 
@@ -423,17 +423,34 @@ public class PlayerController : MonoBehaviour , IAnim
         ref var cd = ref _cooldowns[charId];
 
         if (cd > 0) return;
-
-        cd = CooldownsTotal[charId];
-
+        
         if (charId == 0) //Inviser
         {
             InvisibleTime = InviseTime;
-
-            return;
         }
+        else if (charId == 1) //Hatman
+        {
+            var srcPos = transform.position + new Vector3(0, 0.43f, 0);
+            
+            var ray = LevelCam.Cam.ScreenPointToRay(Input.mousePosition);
 
-        if (charId == 2) //Swapman
+            var hPlane = new Plane(new Vector3(0, 0, -1), new Vector3(0, 0, 0));
+
+            if (hPlane.Raycast(ray, out var distance))
+            {
+                var worldPos3d = ray.GetPoint(distance);
+
+                var hatmanBulletPrefab = Resources.Load<HatmanBullet>("Skills/HatmanBullet");
+            
+                var hatmanBullet = Instantiate(hatmanBulletPrefab, srcPos, Quaternion.identity);
+                hatmanBullet.SetTargetPoint(worldPos3d);
+            }
+            else
+            {
+                return; //skip skill
+            }
+        } 
+        else if (charId == 2) //Swapman
         {
             var srcPos = transform.position + new Vector3(0, 0.43f, 0);
             
@@ -454,10 +471,12 @@ public class PlayerController : MonoBehaviour , IAnim
             var swapBall = Instantiate(swapBallPrefab, srcPos, Quaternion.identity);
             swapBall.SetDir(dir);
         }
+        
+        cd = CooldownsTotal[charId];
     }
     
     
-
+    
     private void SetAnimTrigger(string triggerName)
     {
         foreach (var animator in animators)

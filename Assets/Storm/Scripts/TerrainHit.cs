@@ -6,7 +6,7 @@ public static class TerrainHit
 
     public static bool Get(Vector3 origin, Vector3 dir, out Vector3 point, out float distance)
     {
-        var hitCount = Physics.RaycastNonAlloc(new Ray(origin, dir), histBuffer);
+        var hitCount = Physics.RaycastNonAlloc(new Ray(origin, dir), histBuffer, 20);
         
         distance = float.MaxValue;
         point = Vector3.zero;
