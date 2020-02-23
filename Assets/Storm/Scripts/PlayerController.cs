@@ -513,6 +513,7 @@ public class PlayerController : MonoBehaviour , IAnim
 
         _player.actorCollider.enabled = false;
         
+        _player.actorRigidBody.velocity = Vector3.zero;
         _player.actorRigidBody.AddForce(new Vector3(0, 4, 0), ForceMode.Impulse);
     }
 
