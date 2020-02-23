@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour , IAnim
 {
@@ -101,6 +102,8 @@ public class PlayerController : MonoBehaviour , IAnim
 
     void Awake()
     {
+        Time.timeScale = 1;
+        
         _player = this;
         
         for (var i = 0; i < _animData.Length; i++)
@@ -161,6 +164,21 @@ public class PlayerController : MonoBehaviour , IAnim
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SceneManager.LoadScene("Game");
+        }
+            
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SceneManager.LoadScene("level2");
+        }
+            
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SceneManager.LoadScene("level3");
+        }
+        
         if (isKilled) UpdateKills();
         
         Step();
