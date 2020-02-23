@@ -13,6 +13,7 @@ public class AnimData
 {
     public Vector3 pos;
     public int look;
+    public Quaternion rot;
 
     public bool isInvisible;
     

@@ -27,12 +27,12 @@ public class Follower : MonoBehaviour, IAnim
     {
         if (parent != null) return;
         
-        Init();
+        Reset();
         
         characterSelector.UpdateOrderOffset(orderOffset);
     }
     
-    private void Init()
+    public void Reset()
     {
         parent = parentGo.GetComponent<IAnim>();
         
@@ -46,6 +46,7 @@ public class Follower : MonoBehaviour, IAnim
         }
 
         transform.position = parent.GetAnimData().pos;
+        transform.rotation = parent.GetAnimData().rot;
     }
 
     void Update()
@@ -55,6 +56,7 @@ public class Follower : MonoBehaviour, IAnim
         var frame = frames[readPos % frames.Length];
         
         transform.position = frame.pos + new Vector3(0, 0, 0.17f);
+        transform.rotation = frame.rot;
         if(frame.look != 0) transform.localScale = new Vector3(frame.look > 0 ? 1 : -1, 1, 1);
 
         var charId = parent.GetCharId() + skinOffset;
@@ -104,7 +106,7 @@ public class Follower : MonoBehaviour, IAnim
 
     private void Fetch()
     {
-        if(parent == null) Init();
+        if(parent == null) Reset();
         
         if (Time.frameCount != lastCheckFrame)
         {

@@ -65,7 +65,10 @@ public class PlayerController : MonoBehaviour , IAnim
     
     
     
+    
     //skills
+
+    private bool isKilled;
 
     public static readonly float[] CooldownsTotal =
     {
@@ -90,14 +93,16 @@ public class PlayerController : MonoBehaviour , IAnim
     
     
     //
-    
-    
-    
-    
+
+
+
+    private static PlayerController _player;
     
 
     void Awake()
     {
+        _player = this;
+        
         for (var i = 0; i < _animData.Length; i++)
         {
             _animData[i] = new AnimData();
@@ -156,11 +161,16 @@ public class PlayerController : MonoBehaviour , IAnim
 
     void Update()
     {
+        if (isKilled) UpdateKills();
+        
         Step();
     }
     
-    private void Step()
+    public void Step()
     {
+        
+        
+        
         /*GetBlocksCollisionPos(out var min, out var max);
 
         if (ignoredBlocksCollisionMinPos != min || ignoredBlocksCollisionMaxPos != max)
@@ -189,50 +199,54 @@ public class PlayerController : MonoBehaviour , IAnim
         _animDataPos %= _animData.Length;
         
         _animData[_animDataPos].Clear();
-        
 
-        UpdateInput();
-        
-        
-        var newIsGround = Physics.Raycast(rigidBodyTransform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.13f);
 
-        if(newIsGround && !isGround)
+        if (!isKilled)
         {
-            SetAnimTrigger("Land");
+            UpdateInput();
             
-        }
-        else if (!newIsGround && isGround)
-        {
-            SetAnimTrigger("Jump");
-        }
+            var newIsGround = Physics.Raycast(rigidBodyTransform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.13f);
 
-        isGround = newIsGround;
+            if(newIsGround && !isGround)
+            {
+                SetAnimTrigger("Land");
+            }
+            else if (!newIsGround && isGround)
+            {
+                SetAnimTrigger("Jump");
+            }
 
-        SetAnimBool("IsGround", isGround);
+            isGround = newIsGround;
 
-        //var target = Quaternion.Euler(0, lookDirection > 0 ? 90 : 270, 0);
-        //visualTransform.rotation = Quaternion.Slerp(visualTransform.rotation, target, Time.deltaTime * 20f);
+            SetAnimBool("IsGround", isGround);
+
+            //var target = Quaternion.Euler(0, lookDirection > 0 ? 90 : 270, 0);
+            //visualTransform.rotation = Quaternion.Slerp(visualTransform.rotation, target, Time.deltaTime * 20f);
         
-        if(lookDirection != 0) visualTransform.transform.localScale = new Vector3(lookDirection > 0 ? 1 : -1, 1, 1);
+            if(lookDirection != 0) visualTransform.transform.localScale = new Vector3(lookDirection > 0 ? 1 : -1, 1, 1);
 
-        UpdateVelocity();
+            UpdateVelocity();
 
-        UpdateCurrentAction();
+            UpdateCurrentAction();
         
-        UpdateCooldown();
+            UpdateCooldown();
+        }
+        
 
         InvisibleTime -= Time.deltaTime;
-        if (InvisibleTime < 0) InvisibleTime = 0;
+        if (InvisibleTime < 0 || isKilled) InvisibleTime = 0;
         
         
         
-        visualTransform.position = actorRigidBody.position;
+        //visualTransform.position = actorRigidBody.position;
 
 
         var isInvisibleEnabled = InvisibleTime > 0;
-        
+
+        if (isKilled) isInvisibleEnabled = false;
 
         _animData[_animDataPos].pos = transform.position;
+        _animData[_animDataPos].rot = transform.rotation;
         _animData[_animDataPos].look = lookDirection;
         _animData[_animDataPos].isInvisible = isInvisibleEnabled;
         
@@ -489,5 +503,37 @@ public class PlayerController : MonoBehaviour , IAnim
     public int GetCharId()
     {
         return charId;
+    }
+
+
+    public static void Kill()
+    {
+        if (_player.isKilled) return;
+        
+        _player.isKilled = true;
+
+        _player.actorCollider.enabled = false;
+        
+        _player.actorRigidBody.AddForce(new Vector3(0, 4, 0), ForceMode.Impulse);
+    }
+
+    public static bool IsKilled => _player.isKilled;
+
+    public static bool Invisible => _player.IsInvisible;
+
+    public static bool DisableAttack => Time.time - _player.lastTpTime < 0.3f;
+
+    private float lastTpTime;
+    
+    private void UpdateKills()
+    {
+        transform.Rotate(new Vector3(0, 0, 40 * Time.deltaTime));
+        
+        Time.timeScale = Mathf.Max(0f, Time.timeScale - 0.3f * Time.unscaledDeltaTime);
+    }
+
+    public void SetLastTpTime(float tpTime)
+    {
+        lastTpTime = tpTime;
     }
 }
