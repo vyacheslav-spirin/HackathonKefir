@@ -4,7 +4,7 @@ public static class TerrainHit
 {
     private static readonly RaycastHit[] histBuffer = new RaycastHit[100];
 
-    public static bool Get(Vector3 origin, Vector3 dir, Collider ignoredCollider, out Vector3 point, out float distance)
+    public static bool Get(Vector3 origin, Vector3 dir, out Vector3 point, out float distance)
     {
         var hitCount = Physics.RaycastNonAlloc(new Ray(origin, dir), histBuffer);
         
@@ -17,7 +17,7 @@ public static class TerrainHit
         {
             var hit = histBuffer[i];
 
-            if (hit.collider == ignoredCollider) continue;
+            if (hit.collider.GetComponent<TerrainHitIgnore>()) continue;
             
             if(distance < hit.distance) continue;
             distance = hit.distance;

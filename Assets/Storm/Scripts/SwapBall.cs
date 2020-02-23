@@ -46,6 +46,7 @@ public class SwapBall : MonoBehaviour
                 
                 if (allowSwap != null)
                 {
+
                     var playerPos = _player.transform.position + new Vector3(0, 0.45f, 0);
                     var targetPos = allowSwap.targetPoint.position;
 
@@ -64,8 +65,10 @@ public class SwapBall : MonoBehaviour
                     }
 
                     c.GetComponent<ISwapReceiver>()?.Swapped();
-                    
 
+
+
+                    
                     var smokeEffectPrefab = Resources.Load<GameObject>("SmokeEffect");
                     Instantiate(smokeEffectPrefab, playerPos, Quaternion.identity);
                     Instantiate(smokeEffectPrefab, targetPos, Quaternion.identity);

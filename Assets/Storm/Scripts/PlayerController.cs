@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour , IAnim
 
     void FixedUpdate()
     {
-        actorRigidBody.MovePosition(rigidBodyTransform.position + new Vector3(Time.fixedDeltaTime * horVelocity, 0, 0));
+        actorRigidBody.MovePosition(actorRigidBody.position + new Vector3(Time.fixedDeltaTime * horVelocity, 0, 0));
 
         if (requireJump)
         {
