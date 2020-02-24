@@ -2,7 +2,7 @@
 
 public class LockPlace : MonoBehaviour
 {
-    public Renderer lockRenderer;
+    public Renderer[] lockRenderers;
     
     public int keyIndex;
 
@@ -17,9 +17,12 @@ public class LockPlace : MonoBehaviour
         if (other == PlayerController.Instance.actorCollider && PlayerController.IsContaineKey(keyIndex))
         {
             used = true;
-            
-            lockRenderer.material.color = new Color32(31, 255, 42, 255);
-            
+
+            foreach (var lockRenderer in lockRenderers)
+            {
+                lockRenderer.material.color = new Color32(31, 255, 42, 255);
+            }
+
             door.Open();
         }
     }

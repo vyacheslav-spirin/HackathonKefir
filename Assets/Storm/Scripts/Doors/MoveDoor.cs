@@ -6,6 +6,8 @@ public class MoveDoor : Door
 
     public float openSpeed;
 
+    public AudioSource sound;
+
     private Vector3 targetPos;
     
     private bool isOpened;
@@ -17,6 +19,8 @@ public class MoveDoor : Door
         isOpened = true;
 
         targetPos = transform.position + openOffset;
+        
+        sound.Play();
     }
 
     private void Update()
