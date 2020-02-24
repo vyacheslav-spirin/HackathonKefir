@@ -565,8 +565,10 @@ public class PlayerController : MonoBehaviour , IAnim
     private void UpdateKills()
     {
         transform.Rotate(new Vector3(0, 0, 40 * Time.deltaTime));
+
+        if (Time.timeScale > 0.6f) Time.timeScale = 0.6f;
         
-        Time.timeScale = Mathf.Max(0f, Time.timeScale - 0.3f * Time.unscaledDeltaTime);
+        Time.timeScale = Mathf.Max(0f, Time.timeScale - 0.2f * Time.unscaledDeltaTime);
     }
 
     public void SetLastTpTime(float tpTime)
