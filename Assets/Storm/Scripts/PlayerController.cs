@@ -62,8 +62,8 @@ public class PlayerController : MonoBehaviour , IAnim
     private int _animDataPos;
 
     private int charId = 0;
-    
-    
+
+    public int ActiveCharsCount { get; private set; } = 1;
     
     
     
@@ -413,7 +413,7 @@ public class PlayerController : MonoBehaviour , IAnim
         {
             charId++;
 
-            charId %= 3;
+            charId %= ActiveCharsCount;
             
             UpdateChar();
         }
@@ -592,4 +592,27 @@ public class PlayerController : MonoBehaviour , IAnim
     {
         _player._cooldowns[1] = 0.5f;
     }
+
+    private Follower firstFollower;
+
+    public static void AddCharacter(int id)
+    {
+        if (_player.ActiveCharsCount == 1 && id == 1) //Active hatman
+        {
+            _player.ActiveCharsCount = 2;
+
+            _player.firstFollower = Instantiate(Resources.Load<Follower>("Characters/Follower"), _player.transform.position, Quaternion.identity);
+            _player.firstFollower.Init(_player.gameObject, _player.orderOffset - 10);
+        }
+        
+        if (_player.ActiveCharsCount == 2 && id == 2) //Active swapper
+        {
+            _player.ActiveCharsCount = 3;
+            
+            var secondFollower = Instantiate(Resources.Load<Follower>("Characters/Follower"), _player.transform.position, Quaternion.identity);
+            secondFollower.Init(_player.firstFollower.gameObject, _player.orderOffset - 20);
+        }
+    }
+
+    public static int CurCharCount => _player.ActiveCharsCount;
 }

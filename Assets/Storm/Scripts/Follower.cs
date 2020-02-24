@@ -2,15 +2,14 @@
 
 public class Follower : MonoBehaviour, IAnim
 {
-    public GameObject parentGo;
+    private GameObject parentGo;
 
     public Animator[] animators;
 
     public CharacterSelector characterSelector;
     
     public int skinOffset;
-    public int orderOffset;
-    
+
     private const int offsetFrames = 12;
 
     private AnimData[] frames = new AnimData[100 * 10];
@@ -23,9 +22,11 @@ public class Follower : MonoBehaviour, IAnim
 
     private int lastCheckFrame = -1;
 
-    void Awake()
+    public void Init(GameObject go, int orderOffset)
     {
         if (parent != null) return;
+
+        parentGo = go;
         
         Reset();
         
@@ -60,7 +61,7 @@ public class Follower : MonoBehaviour, IAnim
         if(frame.look != 0) transform.localScale = new Vector3(frame.look > 0 ? 1 : -1, 1, 1);
 
         var charId = parent.GetCharId() + skinOffset;
-        charId %= 3;
+        charId %= PlayerController.CurCharCount;
 
         characterSelector.UpdateRenderers(charId);
         
