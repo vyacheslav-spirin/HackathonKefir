@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwapBall : MonoBehaviour
 {
@@ -66,9 +65,6 @@ public class SwapBall : MonoBehaviour
                     }
 
                     c.GetComponent<ISwapReceiver>()?.Swapped();
-
-
-
                     
                     var smokeEffectPrefab = Resources.Load<GameObject>("SmokeEffect");
                     Instantiate(smokeEffectPrefab, playerPos, Quaternion.identity);
