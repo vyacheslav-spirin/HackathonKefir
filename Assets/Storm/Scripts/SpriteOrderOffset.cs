@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class SpriteOrderOffset : MonoBehaviour
 {
-    public Transform renderersRoot;
-
     public int orderOffset;
     
     private readonly List<SpriteRenderer> renderers = new List<SpriteRenderer>();
     
     void Awake()
     {
-        FindRenderers(renderersRoot);
+        FindRenderers(transform);
         
         UpdateOrderOffset(orderOffset);
     }
