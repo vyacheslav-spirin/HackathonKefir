@@ -120,6 +120,12 @@ public class PlayerController : MonoBehaviour , IAnim
         charId = 0;
         
         UpdateChar();
+
+        if (SceneManager.GetActiveScene().name != "Game")
+        {
+            AddCharacter(1);
+            AddCharacter(2);
+        }
     }
 
     private void UpdateChar()
