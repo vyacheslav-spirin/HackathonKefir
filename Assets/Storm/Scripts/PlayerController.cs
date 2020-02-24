@@ -596,7 +596,7 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
 
     public static bool Invisible => _player.IsInvisible;
 
-    public static bool DisableAttack => Time.time - _player.lastTpTime < 0.3f;
+    public static bool DisableAttack => Time.time - _player.lastTpTime < 0.5f;
 
     private float lastTpTime;
     
