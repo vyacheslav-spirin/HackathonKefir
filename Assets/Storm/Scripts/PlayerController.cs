@@ -475,6 +475,8 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
             
                 var hatmanBullet = Instantiate(hatmanBulletPrefab, srcPos, Quaternion.identity);
                 hatmanBullet.SetTargetPoint(worldPos3d);
+
+                SetAnimTrigger("Jump");
             }
             else
             {
