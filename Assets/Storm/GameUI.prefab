@@ -997,45 +997,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _blackScreen: {fileID: 3524842036396558}
-  _duration: 3
+  _duration: 2
   _fadeOutCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.118176654
-      outSlope: 0.118176654
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.60165715
-      value: 0.07110183
-      inSlope: 0.5445546
-      outSlope: 0.5445546
+      time: 0.70481104
+      value: 0.25929588
+      inSlope: 0.95742154
+      outSlope: 0.95742154
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.39769563
-    - serializedVersion: 3
-      time: 0.7939453
-      value: 0.40967846
-      inSlope: 2.3128276
-      outSlope: 2.3128276
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2.864878
-      outSlope: 2.864878
-      tangentMode: 34
+      time: 0.9818115
+      value: 1.0018845
+      inSlope: 6.608914
+      outSlope: 6.608914
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.049379025
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
