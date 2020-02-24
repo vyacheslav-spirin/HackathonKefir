@@ -181,6 +181,7 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
 
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SceneManager.LoadScene("Game");
@@ -195,7 +196,8 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
         {
             SceneManager.LoadScene("level3");
         }
-        
+#endif
+
         if (isKilled) UpdateKills();
         
         Step();
