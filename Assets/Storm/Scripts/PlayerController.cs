@@ -105,6 +105,12 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
     public static PlayerController Instance => _player;
     void Awake()
     {
+        if (!timeSet)
+        {
+            timeSet = true;
+            StartGameTime = DateTime.UtcNow;
+        }
+        
         Time.timeScale = 1;
 
         createTime = Time.unscaledTime;
@@ -564,12 +570,19 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
     {
         return charId;
     }
-    
+
+    public static int TotalDeathCount { get; private set; }
+
+    public static DateTime StartGameTime { get; private set; }
+    private static bool timeSet;
+
     public static void Kill()
     {
         if (_player.isKilled) return;
         
         _player.isKilled = true;
+
+        TotalDeathCount++;
         
         _player.deathSound.Play();
 
