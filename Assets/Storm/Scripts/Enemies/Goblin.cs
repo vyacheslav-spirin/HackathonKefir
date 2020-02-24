@@ -44,6 +44,8 @@ public class Goblin : MonoBehaviour, ISwapReceiver
                 if (Mathf.Abs(pos1.x - pos2.x) < 0.6f && Vector2.Distance(pos1, pos2) <= 0.8f)
                 {
                     isAttack = true;
+
+                    idleTime = 100;
                     
                     animator.SetTrigger("Attack");
                     animator.SetInteger("Idle", 10);
