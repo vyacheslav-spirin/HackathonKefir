@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MatMover : MonoBehaviour
 {
@@ -11,5 +12,10 @@ public class MatMover : MonoBehaviour
     void Update()
     {
         mat.SetTextureOffset(offsetParamName, mat.GetTextureOffset(offsetParamName) + offsetVelocity * Time.deltaTime);
+    }
+
+    private void OnDestroy()
+    {
+        mat.SetTextureOffset(offsetParamName, new Vector2(0, 0));
     }
 }
