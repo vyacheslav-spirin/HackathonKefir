@@ -73,8 +73,6 @@ namespace Intro
 
         private IEnumerator Scenario()
         {
-            Debug.Log("Start scenario");
-
             Coroutine blackScreen = StartCoroutine(BlackScreen(1f, 0f, 1.2f));
             yield return new WaitForSeconds(_startDelay);
 
@@ -153,13 +151,6 @@ namespace Intro
                     Vector3 start = _startPositions[i];
                     Vector3 finish = _upcomingPositions[i];
                     _characters[i].position = Vector3.Lerp(start, finish, t);
-                    if (i == 0)
-                    {
-                        Debug.Log("start " + start);
-                        Debug.Log("finish " +finish);
-                        Debug.Log(t);
-                        Debug.Log("transform " +_characters[i].position);
-                    }
                 }
                    
                 yield return new WaitForEndOfFrame();
@@ -191,7 +182,8 @@ namespace Intro
         private IEnumerator ToBeContinued()
         {
             yield return new WaitForSeconds(_speech6.Delay);
-            Debug.Log("Slava");
+            
+            ContinueMover.Play();
         }
     }
 }

@@ -430,7 +430,7 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             charId++;
 

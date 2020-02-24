@@ -8,16 +8,18 @@ public class ContinueMover : MonoBehaviour
 
     public Image arrowImage;
 
-    public AudioSource music;
-
     public Text deathCountText;
     public Text gameTimeText;
+
+    public CageHeadSwitcher headSwitcher;
 
     public Text[] endTexts;
     
     private bool run = false;
 
     private static ContinueMover instance;
+    
+    
 
     private void Awake()
     {
@@ -26,8 +28,6 @@ public class ContinueMover : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H)) Play();
-        
         if (!run) return;
 
         arrowImage.enabled = true;
@@ -91,8 +91,6 @@ public class ContinueMover : MonoBehaviour
     {
         instance.run = true;
         
-        instance.music.Play();
-
-        instance.music.time = 39.5f;
+        instance.headSwitcher.Switch();
     }
 }
