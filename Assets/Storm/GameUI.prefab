@@ -378,13 +378,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
+    m_Font: {fileID: 12800000, guid: fe89338b11bf2e94fa07cf48e51b3718, type: 3}
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -498,6 +498,7 @@ MonoBehaviour:
   _canvas: {fileID: 6746012934469688369}
   _camera: {fileID: 0}
   _text: {fileID: 2446308286892303247}
+  _rectTransform: {fileID: 2060906107627359633}
 --- !u!114 &3195256946471342772
 MonoBehaviour:
   m_ObjectHideFlags: 0

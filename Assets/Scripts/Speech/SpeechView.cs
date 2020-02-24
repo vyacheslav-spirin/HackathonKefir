@@ -8,6 +8,7 @@ namespace Speech
         [SerializeField] private Canvas _canvas;
         [SerializeField] private Camera _camera;
         [SerializeField] private Text _text;
+        [SerializeField] private RectTransform _rectTransform;
 
         private Transform _followTransform;
 
@@ -32,6 +33,11 @@ namespace Speech
         public void SetActive(bool isActive)
         {
             gameObject.SetActive(isActive);
+        }
+
+        public void RebuildLayout()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
         }
         
         private static Vector3 PositionFromWorldToCanvas(Canvas canvas, Vector3 position, Camera worldCamera)

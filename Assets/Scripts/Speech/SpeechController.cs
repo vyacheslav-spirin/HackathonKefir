@@ -30,6 +30,7 @@ namespace Speech
                 Transform speechTransform = GetSpeechTransform(speech.CharId);
                 _view.SetFollowTransform(speechTransform);
                 _view.SetActive(speechTransform != null);
+                _view.RebuildLayout();
                 yield return new WaitForSeconds(speech.Duration);
                 _view.SetActive(false);
                 _view.SetFollowTransform(null);

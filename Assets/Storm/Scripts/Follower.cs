@@ -130,7 +130,7 @@ public class Follower : MonoBehaviour, IAnim, ISpeaker
 
     public int GetCharId()
     {
-        return (parent.GetCharId() + skinOffset) % 3;
+        return (parent.GetCharId() + skinOffset) % PlayerController.CurCharCount;
     }
 
     int ISpeaker.CharId => GetCharId();
