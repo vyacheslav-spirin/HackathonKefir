@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Slime : MonoBehaviour, ISwapReceiver
@@ -9,6 +8,8 @@ public class Slime : MonoBehaviour, ISwapReceiver
     public Transform attackTransform;
 
     public ParticleSystem particles;
+
+    public AudioSource jumpSound;
     
     private float idleDelay;
     private bool nextIdleAnim;
@@ -128,6 +129,8 @@ public class Slime : MonoBehaviour, ISwapReceiver
     
     private void PrepareMove()
     {
+        jumpSound.Play();
+        
         if (isMove == 1)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -140,6 +143,8 @@ public class Slime : MonoBehaviour, ISwapReceiver
 
     private void CompleteMove()
     {
+        jumpSound.Play();
+        
         if (isMove == 1)
         {
             transform.rotation = Quaternion.Euler(0, 0, 180);
@@ -153,6 +158,8 @@ public class Slime : MonoBehaviour, ISwapReceiver
     public void Swapped()
     {
         isMove = 0;
+        
+        jumpSound.Play();
 
         var upSuccess = TerrainHit.Get(transform.position, new Vector3(0, 1, 0), out var upPoint, out var upDistance);
         var downSuccess = TerrainHit.Get(transform.position, new Vector3(0, -1, 0), out var downPoint, out var downDistance);
