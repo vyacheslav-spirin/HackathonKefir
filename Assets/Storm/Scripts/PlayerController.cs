@@ -223,7 +223,7 @@ public class PlayerController : MonoBehaviour , IAnim
         {
             UpdateInput();
             
-            var newIsGround = Physics.Raycast(rigidBodyTransform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.13f);
+            var newIsGround = Physics.Raycast(rigidBodyTransform.position + new Vector3(0, 0.1f, 0), -Vector3.up, 0.13f, -1, QueryTriggerInteraction.Ignore);
 
             if(newIsGround && !isGround)
             {
@@ -580,5 +580,10 @@ public class PlayerController : MonoBehaviour , IAnim
         {
             Kill();
         }
+    }
+
+    public static void FailHatmanSkill()
+    {
+        _player._cooldowns[1] = 0.5f;
     }
 }

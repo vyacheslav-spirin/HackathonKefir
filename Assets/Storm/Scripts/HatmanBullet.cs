@@ -20,6 +20,8 @@ public class HatmanBullet : MonoBehaviour
         _player = FindObjectOfType<PlayerController>();
     }
 
+    private bool successSpawned;
+
     private void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, 6f * Time.deltaTime);
@@ -28,6 +30,7 @@ public class HatmanBullet : MonoBehaviour
         {
             TryPlaceObject();
             
+            if(!successSpawned) PlayerController.FailHatmanSkill();
             Destroy(gameObject);
         }
         else
@@ -38,10 +41,12 @@ public class HatmanBullet : MonoBehaviour
             {
                 var c = collisions[i];
                 if (c == col) continue;
+                if (c.isTrigger) continue;
                 if (c == _player.GetComponent<Collider>()) continue;
 
                 if (c.GetComponent<TerrainHitIgnore>() != null)
                 {
+                    if(!successSpawned) PlayerController.FailHatmanSkill();
                     Destroy(gameObject);
 
                     return;
@@ -56,6 +61,7 @@ public class HatmanBullet : MonoBehaviour
 
                 TryPlaceObject();
 
+                if(!successSpawned) PlayerController.FailHatmanSkill();
                 Destroy(gameObject);
 
                 return;
@@ -74,10 +80,12 @@ public class HatmanBullet : MonoBehaviour
         {
             var c = collisions[i];
             if (c == col) continue;
-            
+            if (c.isTrigger) continue;
             if (c == _player.GetComponent<Collider>()) return;
         }
 
         Instantiate(hatmanBoxPrefab, transform.position, Quaternion.identity);
+
+        successSpawned = true;
     }
 }

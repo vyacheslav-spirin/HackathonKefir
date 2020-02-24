@@ -6,7 +6,7 @@ public static class TerrainHit
 
     public static bool Get(Vector3 origin, Vector3 dir, out Vector3 point, out float distance)
     {
-        var hitCount = Physics.RaycastNonAlloc(new Ray(origin, dir), histBuffer, 20);
+        var hitCount = Physics.RaycastNonAlloc(new Ray(origin, dir), histBuffer, 20, -1, QueryTriggerInteraction.Ignore);
         
         distance = float.MaxValue;
         point = Vector3.zero;
@@ -17,6 +17,7 @@ public static class TerrainHit
         {
             var hit = histBuffer[i];
 
+            if (hit.collider.isTrigger) continue;
             if (hit.collider.GetComponent<TerrainHitIgnore>()) continue;
             
             if(distance < hit.distance) continue;

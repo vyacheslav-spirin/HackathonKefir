@@ -40,6 +40,7 @@ public class SwapBall : MonoBehaviour
             {
                 var c = collisions[i];
                 if(c == col) continue;
+                if(c.isTrigger) continue;
                 if (c == _player.GetComponent<Collider>()) continue;
 
                 var allowSwap = c.GetComponent<AllowSwap>();
