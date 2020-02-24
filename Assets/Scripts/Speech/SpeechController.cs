@@ -14,10 +14,11 @@ namespace Speech
         private void OnTriggerEnter(Collider other)
         {
             SpeechTrigger speechTrigger = other.GetComponent<SpeechTrigger>();
-            if (speechTrigger != null)
+            if (speechTrigger != null && !speechTrigger.WasSeen)
             {
                 StopAllCoroutines();
                 _speechCoroutine = StartCoroutine(StartSpeech(speechTrigger));
+                speechTrigger.WasSeen = true;
             }
         }
 

@@ -6,7 +6,8 @@ namespace Speech
     public class SpeechTrigger : MonoBehaviour
     {
         [SerializeField] private List<Speech> _speechList;
-        
+
         public List<Speech> SpeechList => _speechList;
+        public bool WasSeen { get; set; } = false;
     }
 }
