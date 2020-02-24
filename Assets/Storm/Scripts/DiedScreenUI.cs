@@ -32,6 +32,13 @@ public class DiedScreenUI : MonoBehaviour
     IEnumerator ScreenProgram()
     {
         yield return WaitForRealSeconds(1);
+
+        var sources = FindObjectsOfType<AudioSource>();
+
+        foreach (var source in sources)
+        {
+            source.Stop();
+        }
         
         diedAudio.Play();
 
