@@ -31,7 +31,7 @@ public class DiedScreenUI : MonoBehaviour
 
     IEnumerator ScreenProgram()
     {
-        yield return WaitForRealSeconds(1);
+        yield return WaitForRealSeconds(0.7f);
 
         var sources = FindObjectsOfType<AudioSource>();
 
