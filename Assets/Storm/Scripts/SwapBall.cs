@@ -56,7 +56,7 @@ public class SwapBall : MonoBehaviour
                     c.transform.position = playerPos;
                     _player.transform.position = targetPos;
                     
-                    _player.SetLastTpTime(Time.time);
+                    _player.SetLastTpFrame();
                     
                     _player.Step();
                     foreach (var follower in _followers)
