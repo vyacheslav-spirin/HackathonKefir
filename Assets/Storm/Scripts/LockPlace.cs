@@ -14,7 +14,7 @@ public class LockPlace : MonoBehaviour
     {
         if (used) return;
         
-        if (other == PlayerController.Instance.actorCollider)
+        if (other == PlayerController.Instance.actorCollider && PlayerController.IsContaineKey(keyIndex))
         {
             used = true;
             

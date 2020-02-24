@@ -644,6 +644,13 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
         }
     }
 
+    public static bool IsContaineKey(int index)
+    {
+        if (index == 0) return _player.key1Found;
+
+        return false;
+    }
+
     public static int CurCharCount => _player.ActiveCharsCount;
     public static bool IsHatSkillReady => _player._cooldowns[1] < 0.001f;
     int ISpeaker.CharId => GetCharId();
