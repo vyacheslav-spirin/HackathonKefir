@@ -13,8 +13,10 @@ public class ContinueMover : MonoBehaviour
 
     public CageHeadSwitcher headSwitcher;
 
-    public Text[] endTexts;
+    public Image backImage;
     
+    public Text[] endTexts;
+
     private bool run = false;
 
     private static ContinueMover instance;
@@ -81,6 +83,8 @@ public class ContinueMover : MonoBehaviour
         deathCountText.enabled = true;
         gameTimeText.enabled = true;
 
+        backImage.enabled = true;
+        
         foreach (var endText in endTexts)
         {
             endText.enabled = true;
