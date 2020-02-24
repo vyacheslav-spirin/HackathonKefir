@@ -20,6 +20,7 @@ namespace Intro
         [SerializeField] private AnimationCurve _shakeCurve;
         [SerializeField] private float _cameraYOffset;
         [SerializeField] private float _shakeDuration;
+        [SerializeField] private AudioSource _quake;
 
         [Space] [Header("Down")] 
         [SerializeField] private Animator _rogueAnimator;
@@ -27,6 +28,7 @@ namespace Intro
 
         [Space] [Header("Cage break")] 
         [SerializeField] private Transform _cage;
+        // [SerializeField] private AudioSource _yeah;
         [SerializeField] private Image _blackScreen;
         [SerializeField] private IntroFinisher _finisher;
 
@@ -49,6 +51,7 @@ namespace Intro
             float endTs = Time.time + _cameraOncomingTime;
             float startTs = Time.time;
             float nowTs = Time.time;
+            _quake.Play();
             while (nowTs < endTs)
             {
                 Debug.Log("Update camera position");
