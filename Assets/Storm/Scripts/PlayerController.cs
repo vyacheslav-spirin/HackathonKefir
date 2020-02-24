@@ -103,6 +103,8 @@ public class PlayerController : MonoBehaviour , IAnim
     void Awake()
     {
         Time.timeScale = 1;
+
+        createTime = Time.unscaledTime;
         
         _player = this;
         
@@ -370,6 +372,8 @@ public class PlayerController : MonoBehaviour , IAnim
         lastMoveDirection = direction;
     }
 
+    private float createTime;
+
     public void Jump()
     {
         if (isGround && Time.time - lastJumpTime > JumpCooldown)
@@ -377,6 +381,8 @@ public class PlayerController : MonoBehaviour , IAnim
             requireJump = true;
 
             lastJumpTime = Time.time;
+            
+            if(Time.unscaledTime - createTime > 0.5f) _player.jumpSound.Play();
         }
     }
 
@@ -544,6 +550,7 @@ public class PlayerController : MonoBehaviour , IAnim
     public AnimData GetAnimData() => _animData[_animDataPos];
 
     public AudioSource deathSound;
+    public AudioSource jumpSound;
     
     public int GetCharId()
     {
