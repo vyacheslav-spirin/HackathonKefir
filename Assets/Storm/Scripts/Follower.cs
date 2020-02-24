@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Speech;
+using UnityEngine;
 
-public class Follower : MonoBehaviour, IAnim
+public class Follower : MonoBehaviour, IAnim, ISpeaker
 {
     private GameObject parentGo;
 
@@ -21,6 +22,7 @@ public class Follower : MonoBehaviour, IAnim
 
 
     private int lastCheckFrame = -1;
+    [SerializeField] private Transform _speechTransform;
 
     public void Init(GameObject go, int orderOffset)
     {
@@ -128,6 +130,9 @@ public class Follower : MonoBehaviour, IAnim
 
     public int GetCharId()
     {
-        return parent.GetCharId() + skinOffset;
+        return (parent.GetCharId() + skinOffset) % 3;
     }
+
+    int ISpeaker.CharId => GetCharId();
+    Transform ISpeaker.SpeechTransform => _speechTransform;
 }

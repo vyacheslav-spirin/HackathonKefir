@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Speech;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour , IAnim
+public class PlayerController : MonoBehaviour , IAnim, ISpeaker
 {
     public enum CharacterAction
     {
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour , IAnim
 
 
     private static PlayerController _player;
-    
+    [SerializeField] private Transform _speechTransform;
 
     void Awake()
     {
@@ -616,18 +617,21 @@ public class PlayerController : MonoBehaviour , IAnim
 
             _player.firstFollower = Instantiate(Resources.Load<Follower>("Characters/Follower"), _player.transform.position, Quaternion.identity);
             _player.firstFollower.Init(_player.gameObject, _player.orderOffset - 10);
+            _player.GetComponent<SpeechController>().AddSpeaker(_player.firstFollower);
         }
         
         if (_player.ActiveCharsCount == 2 && id == 2) //Active swapper
         {
             _player.ActiveCharsCount = 3;
             
-            var secondFollower = Instantiate(Resources.Load<Follower>("Characters/Follower"), _player.transform.position, Quaternion.identity);
+            Follower secondFollower = Instantiate(Resources.Load<Follower>("Characters/Follower"), _player.transform.position, Quaternion.identity);
             secondFollower.Init(_player.firstFollower.gameObject, _player.orderOffset - 20);
+            _player.GetComponent<SpeechController>().AddSpeaker(secondFollower);
         }
     }
 
     public static int CurCharCount => _player.ActiveCharsCount;
-
-    public static bool IsHatSkillReady => _player._cooldowns[1] < 0.001f;
+public static bool IsHatSkillReady => _player._cooldowns[1] < 0.001f;
+    int ISpeaker.CharId => GetCharId();
+    Transform ISpeaker.SpeechTransform => _speechTransform;
 }
