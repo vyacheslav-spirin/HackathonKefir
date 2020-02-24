@@ -104,7 +104,7 @@ public class Slime : MonoBehaviour, ISwapReceiver
 
         if (!isAttack)
         {
-            if (isMove == 0)
+            if (isMove != 0)
             {
                 idleDelay = Random.Range(0.5f, 2f);
             
