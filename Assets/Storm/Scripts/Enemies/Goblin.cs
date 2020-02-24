@@ -5,6 +5,9 @@ public class Goblin : MonoBehaviour, ISwapReceiver
     public Animator animator;
 
     public Transform attackTransform;
+
+    public Rigidbody rigid;
+    public Collider col;
     
     private float idleTime;
 
@@ -41,11 +44,14 @@ public class Goblin : MonoBehaviour, ISwapReceiver
             {
                 var pos2 = new Vector2(target.transform.position.x, target.transform.position.y);
 
-                if (Mathf.Abs(pos1.x - pos2.x) < 0.6f && Vector2.Distance(pos1, pos2) <= 0.8f)
+                if (Mathf.Abs(pos1.x - pos2.x) < 0.6f && Vector2.Distance(pos1, pos2) <= 1.2f)
                 {
                     isAttack = true;
 
                     idleTime = 100;
+
+                    rigid.isKinematic = true;
+                    col.enabled = false;
                     
                     animator.SetTrigger("Attack");
                     animator.SetInteger("Idle", 10);

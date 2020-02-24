@@ -6,6 +6,9 @@ public class CharacterActivator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerController.AddCharacter(id);
+        if (other == PlayerController.Instance.actorCollider)
+        {
+            PlayerController.AddCharacter(id);
+        }
     }
 }
