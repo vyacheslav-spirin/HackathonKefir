@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
     private static PlayerController _player;
     [SerializeField] private Transform _speechTransform;
 
+
+    public static PlayerController Instance => _player;
     void Awake()
     {
         Time.timeScale = 1;
