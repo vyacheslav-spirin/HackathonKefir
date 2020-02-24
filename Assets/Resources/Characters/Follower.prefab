@@ -1786,6 +1786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4040216137755773187}
   - component: {fileID: 4040216137755773186}
+  - component: {fileID: 1296259495336078715}
   m_Layer: 0
   m_Name: hat
   m_TagString: Untagged
@@ -1855,6 +1856,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1296259495336078715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4040216137755773212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b87885b18956d0429204198b2e0b32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hatRenderer: {fileID: 4040216137755773186}
+  any: {fileID: 717745171374601111}
 --- !u!1 &4431059810164199648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,7 +1882,7 @@ GameObject:
   - component: {fileID: 5711799308541019117}
   - component: {fileID: 4431059810164199679}
   m_Layer: 0
-  m_Name: Dummy
+  m_Name: Follower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1919,14 +1934,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a761d5660722e4a8225204bcb9ba98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentGo: {fileID: 0}
   animators:
   - {fileID: 6630416719032016417}
   - {fileID: 744606368927889499}
   - {fileID: 8103743277921733920}
   characterSelector: {fileID: 5711799308541019117}
   skinOffset: 1
-  orderOffset: 20
 --- !u!1 &6724427710602513535
 GameObject:
   m_ObjectHideFlags: 0
