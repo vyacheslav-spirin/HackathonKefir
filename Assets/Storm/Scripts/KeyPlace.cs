@@ -5,6 +5,8 @@ public class KeyPlace : MonoBehaviour
     public GameObject key;
 
     public int keyIndex;
+
+    public AudioSource sound;
     
     private bool used;
     
@@ -17,6 +19,8 @@ public class KeyPlace : MonoBehaviour
             used = true;
             
             key.SetActive(false);
+            
+            sound.Play();
             
             PlayerController.AddKey(keyIndex);
         }
