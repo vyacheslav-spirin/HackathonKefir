@@ -479,6 +479,8 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
                 hatmanBullet.SetTargetPoint(worldPos3d);
 
                 SetAnimTrigger("Jump");
+                
+                hatThrowSound.Play();
             }
             else
             {
@@ -556,6 +558,7 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
 
     public AudioSource deathSound;
     public AudioSource jumpSound;
+    public AudioSource hatThrowSound;
     
     public int GetCharId()
     {
