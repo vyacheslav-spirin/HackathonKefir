@@ -997,7 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _blackScreen: {fileID: 3524842036396558}
-  _duration: 2
+  _duration: 1
   _fadeOutCurve:
     serializedVersion: 2
     m_Curve:
