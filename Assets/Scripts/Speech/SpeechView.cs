@@ -6,7 +6,6 @@ namespace Speech
     public class SpeechView : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private Camera _camera;
         [SerializeField] private Text _text;
         [SerializeField] private RectTransform _rectTransform;
 
@@ -16,7 +15,7 @@ namespace Speech
         {
             if (_followTransform != null)
             {
-                transform.position = PositionFromWorldToCanvas(_canvas, _followTransform.position, _camera);
+                transform.position = PositionFromWorldToCanvas(_canvas, _followTransform.position);
             }
         }
 
@@ -40,17 +39,17 @@ namespace Speech
             LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
         }
         
-        private static Vector3 PositionFromWorldToCanvas(Canvas canvas, Vector3 position, Camera worldCamera)
+        private static Vector3 PositionFromWorldToCanvas(Canvas canvas, Vector3 position)
         {
             Vector3 pos = Vector3.zero;
             if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
             {
-                pos = worldCamera.WorldToScreenPoint(position);
+                pos = LevelCam.Cam.WorldToScreenPoint(position);
             }
             else if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
             {
                 var tempVector = Vector2.zero;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, worldCamera.WorldToScreenPoint(position), canvas.worldCamera, out tempVector);
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, LevelCam.Cam.WorldToScreenPoint(position), canvas.worldCamera, out tempVector);
                 pos = canvas.transform.TransformPoint(tempVector);
             }
 
