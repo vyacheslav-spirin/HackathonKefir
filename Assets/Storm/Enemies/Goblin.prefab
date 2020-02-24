@@ -165,6 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 8963485162148584743}
   attackTransform: {fileID: 8963485163142195830}
+  rigid: {fileID: 8963485162155975328}
+  col: {fileID: 8963485162155975329}
 --- !u!136 &8963485162155975329
 CapsuleCollider:
   m_ObjectHideFlags: 0
