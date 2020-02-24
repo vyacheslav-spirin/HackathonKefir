@@ -536,6 +536,8 @@ public class PlayerController : MonoBehaviour , IAnim
     }
 
     public AnimData GetAnimData() => _animData[_animDataPos];
+
+    public AudioSource deathSound;
     
     public int GetCharId()
     {
@@ -547,6 +549,8 @@ public class PlayerController : MonoBehaviour , IAnim
         if (_player.isKilled) return;
         
         _player.isKilled = true;
+        
+        _player.deathSound.Play();
 
         _player.actorCollider.enabled = false;
         
