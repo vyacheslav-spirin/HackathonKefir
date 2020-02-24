@@ -628,4 +628,6 @@ public class PlayerController : MonoBehaviour , IAnim
     }
 
     public static int CurCharCount => _player.ActiveCharsCount;
+
+    public static bool IsHatSkillReady => _player._cooldowns[1] < 0.001f;
 }

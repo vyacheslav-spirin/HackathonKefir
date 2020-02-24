@@ -44,7 +44,7 @@ public class HatmanBullet : MonoBehaviour
                 if (c.isTrigger) continue;
                 if (c == _player.GetComponent<Collider>()) continue;
 
-                if (c.GetComponent<TerrainHitIgnore>() != null)
+                if (c.GetComponent<TerrainHitIgnore>() != null || c.GetComponent<Goblin>() != null)
                 {
                     if(!successSpawned) PlayerController.FailHatmanSkill();
                     Destroy(gameObject);
@@ -52,7 +52,7 @@ public class HatmanBullet : MonoBehaviour
                     return;
                 }
             }
-            
+
             for (var i = 0; i < size; i++)
             {
                 var c = collisions[i];
@@ -82,6 +82,7 @@ public class HatmanBullet : MonoBehaviour
             var c = collisions[i];
             if (c == col) continue;
             if (c.isTrigger) continue;
+            if (c.GetComponent<Goblin>() != null) return;
             if (c == _player.GetComponent<Collider>()) return;
         }
 
