@@ -178,9 +178,20 @@ public class PlayerController : MonoBehaviour , IAnim, ISpeaker
             actorRigidBody.AddForce(Vector3.up * 6, ForceMode.Impulse);
         }
     }
+    
+    
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            timeSet = false;
+            SceneManager.LoadScene("Game");
+            return;
+        }
+        
+        
+        
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
